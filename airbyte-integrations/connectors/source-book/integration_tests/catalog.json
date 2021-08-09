@@ -1,0 +1,200 @@
+{
+  "streams": [
+    {
+      "name": "book",
+      "supported_sync_modes": ["full_refresh"],
+      "source_defined_cursor": false,
+      "default_cursor_field": "column1",
+      "json_schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+          "properties": {
+            "status": {
+              "type": "string"
+            },
+            "copyright": {
+              "type": "string"
+            },
+            "num_results": {
+              "type": "integer"
+            },
+            "results": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "contributor": {
+                      "type": "string"
+                    },
+                    "author": {
+                      "type": "string"
+                    },
+                    "contributor_note": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "string"
+                    },
+                    "age_group": {
+                      "type": "string"
+                    },
+                    "publisher": {
+                      "type": "string"
+                    },
+                    "isbns": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "isbn10": {
+                              "type": "string"
+                            },
+                            "isbn13": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "isbn10",
+                            "isbn13"
+                          ]
+                        }
+                      ]
+                    },
+                    "ranks_history": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "primary_isbn10": {
+                              "type": "string"
+                            },
+                            "primary_isbn13": {
+                              "type": "string"
+                            },
+                            "rank": {
+                              "type": "integer"
+                            },
+                            "list_name": {
+                              "type": "string"
+                            },
+                            "display_name": {
+                              "type": "string"
+                            },
+                            "published_date": {
+                              "type": "string"
+                            },
+                            "bestsellers_date": {
+                              "type": "string"
+                            },
+                            "weeks_on_list": {
+                              "type": "integer"
+                            },
+                            "rank_last_week": {
+                              "type": "integer"
+                            },
+                            "asterisk": {
+                              "type": "integer"
+                            },
+                            "dagger": {
+                              "type": "integer"
+                            }
+                          },
+                          "required": [
+                            "primary_isbn10",
+                            "primary_isbn13",
+                            "rank",
+                            "list_name",
+                            "display_name",
+                            "published_date",
+                            "bestsellers_date",
+                            "weeks_on_list",
+                            "rank_last_week",
+                            "asterisk",
+                            "dagger"
+                          ]
+                        }
+                      ]
+                    },
+                    "reviews": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "book_review_link": {
+                              "type": "string"
+                            },
+                            "first_chapter_link": {
+                              "type": "string"
+                            },
+                            "sunday_review_link": {
+                              "type": "string"
+                            },
+                            "article_chapter_link": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "book_review_link",
+                            "first_chapter_link",
+                            "sunday_review_link",
+                            "article_chapter_link"
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "description",
+                    "contributor",
+                    "author",
+                    "contributor_note",
+                    "price",
+                    "age_group",
+                    "publisher",
+                    "isbns",
+                    "ranks_history",
+                    "reviews"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "status",
+            "copyright",
+            "num_results",
+            "results"
+          ]
+        }
+     
+    },
+    {
+      "name": "table1",
+      "supported_sync_modes": ["full_refresh"],
+      "source_defined_cursor": false,
+      "json_schema": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "type": "object",
+        "properties": {
+          "column1": {
+            "type": "string"
+          },
+          "column2": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  ]
+}

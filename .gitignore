@@ -1,0 +1,38 @@
+.gradle
+.idea
+*.iml
+build
+out
+.DS_Store
+data
+.dockerversions
+.classpath
+.project
+.settings
+
+# Secrets
+secrets
+!airbyte-integrations/connector-templates/**/secrets
+
+# Python
+*.egg-info
+__pycache__
+.eggs
+.venv
+.mypy_cache
+.ipynb_checkpoints
+.pytest_
+
+# dbt
+profiles.yml
+
+# Terraform
+.terraform/
+crash.log
+*.tfstate
+*.tfstate.backup
+*.lock.hcl
+
+# Airflow Demo
+resources/examples/airflow/logs/*
+!resources/examples/airflow/logs/.gitkeep

@@ -1,0 +1,81 @@
+{
+  "documentationUrl": "https://developer.nytimes.com/docs/books-product/1/routes/lists/best-sellers/history.json/get",
+  "connectionSpecification": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Book Spec",
+    "type": "object",
+    "required": ["api_key"],
+    "additionalProperties": false,
+    "properties": {
+        "api_key": {
+        "title": "api_key",
+        "type": "string",
+        "description": "The nytimes Cloud API key to use to hit the API.",
+        "airbyte_secret": true
+      }
+      ,
+      "age_group": {
+        "title": "age_group",
+
+        "type": "string",
+        "description": "The target age group for the best seller.",
+        "examples": [""]
+      }
+      ,
+      "author": {
+        "title": "author",
+
+        "type": "string",
+        "description": "The author of the best seller. The author field does not include additional contributors (see Data Structure for more details about the author and contributor fields).\n When searching the author field, you can specify any combination of first, middle and last names.\n When sort-by is set to author, the results will be sorted by author's first name.\n",
+        "examples": ["Ron Carr"]
+      }
+      ,
+      "contributor": {
+        "title": "contributor",
+
+        "type": "string",
+        "description": "The author of the best seller, as well as other contributors such as the illustrator (to search or sort by author name only, use author instead). \n When searching, you can specify any combination of first, middle and last names of any of the contributors. \n When sort-by is set to contributor, the results will be sorted by the first name of the first contributor listed.",
+        "examples": ["by Robyn Carr"]
+      }
+      ,
+      "isbn": {
+        "title": "isbn",
+
+        "type": "string",
+        "description": "International Standard Book Number, 10 or 13 digits \n A best seller may have both 10-digit and 13-digit ISBNs, and may have multiple ISBNs of each type. To search on multiple ISBNs, separate the ISBNs with semicolons (example: 9780446579933;0061374229).",
+        "examples": ["9780446579933;0061374229"]
+      }      ,
+      "offset": {
+        "title": "offset",
+
+        "type": "integer",
+        "description": "must be a multiple of 20 \n Sets the starting point of the result set (0, 20, ...). Used to paginate thru results if there are more than 20. Defaults to 0. The num_results field indicates how many results there are total.",
+        "examples": ["0","20"]
+      }
+      ,
+      "price": {
+        "title": "price",
+
+        "type": "string",
+        "description": "The publisher's list price of the best seller, including decimal point.",
+        "examples": [""]
+      }
+      ,
+      "publisher": {
+        "title": "publisher",
+
+        "type": "string",
+        "description": "The standardized name of the publisher",
+        "examples": ["Dell"]
+      }
+      ,
+      "title": {
+        "title": "title",
+
+        "type": "string",
+        "description": "The title of the best seller",
+        "examples": ["Dell"]
+      }
+    }
+  }
+}

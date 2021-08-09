@@ -1,0 +1,24 @@
+{
+  "documentationUrl": "https://developer.nytimes.com/docs/books-product/1/routes/lists/best-sellers/history.json/get",
+  "connectionSpecification": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Best Sellers Spec",
+    "type": "object",
+    "required": ["api_key"],
+    "additionalProperties": false,
+    "properties": {
+        "api_key": {
+        "title": "api_key",
+        "type": "string",
+        "description": "The nytimes Cloud API key to use to hit the API.",
+        "airbyte_secret": true
+      },
+      "publisher": {
+        "type": "string",
+        "description": "publisher",
+        "examples": ["Dell"]
+      }
+    }
+  }
+}
+
