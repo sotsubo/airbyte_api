@@ -34,10 +34,6 @@ class Book(HttpStream, ABC):
         response_json = response.json()
         if (response_json['num_results'] - self.offset) > 20:
             self.offset  += 20
-            print ("response_json['num_results'",response_json['num_results'])
-
-            print ("self.offset",self.offset)
-
             return {"offset": self.offset}
         
     def path(
@@ -101,7 +97,6 @@ class SourceBook(AbstractSource):
                         params["offset"] = offset
                 except OffsetException as e:
                     return False, e
-
             price = config.get("price")
             if price is not None:
                 params["price"] = price
