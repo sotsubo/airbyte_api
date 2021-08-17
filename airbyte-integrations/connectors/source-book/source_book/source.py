@@ -14,7 +14,7 @@ class Book(HttpStream, ABC):
     cursor_field = date_field_name
     primary_key = ""
 
-    def __init__(self, publisher: Optional[str],  title: Optional[str],  price: Optional[str], offset: Optional[str],  isbn: Optional[str], contributor: Optional[str], author: Optional[str], age_group: Optional[str], api_key: str):
+    def __init__(self, publisher: Optional[str],  title: Optional[str],  price: Optional[str], offset: Optional[int],  isbn: Optional[str], contributor: Optional[str], author: Optional[str], age_group: Optional[str], api_key: str):
         super().__init__()
         self.publisher = publisher
         self.api_key = api_key
@@ -23,17 +23,28 @@ class Book(HttpStream, ABC):
         self.author = author
         self.contributor = contributor
         self.isbn = isbn
-        self.offset = offset
+        if offset:
+            self.offset = offset
+        else: 
+            self.offset = 0
         self.price = price
         self.title = title
+
+    def next_page_token(self, response: requests.Response) -> Optional[Mapping[str, Any]]:
+        response_json = response.json()
+        if (response_json['num_results'] - self.offset) > 20:
+            self.offset  += 20
+            print ("response_json['num_results'",response_json['num_results'])
+
+            print ("self.offset",self.offset)
+
+            return {"offset": self.offset}
+        
     def path(
         self, stream_state: Mapping[str, Any] = None, stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None
     ) -> str:
         return ''
-
-    def next_page_token(self, response: requests.Response) -> Optional[Mapping[str, Any]]:
-        return None
-    def request_params(self, **kwargs) -> MutableMapping[str, Any]:
+    def request_params(self, next_page_token: Mapping[str, Any] = None, **kwargs) -> MutableMapping[str, Any]:
         params = {"api-key": self.api_key}
 
         if self.age_group is not None:
@@ -52,12 +63,16 @@ class Book(HttpStream, ABC):
             params["publisher"] = self.publisher
         if self.title is not None:
             params["title"] = self.title
-
+        if next_page_token:
+            params.update(next_page_token)
         return params
 
     def parse_response(self, response: requests.Response, **kwargs) -> Iterable[Mapping]:
         response_json = response.json()
         yield response_json
+class OffsetException(Exception):
+    pass
+
 class SourceBook(AbstractSource):
     def check_connection(self, logger, config) -> Tuple[bool, any]:
         try:
@@ -79,7 +94,14 @@ class SourceBook(AbstractSource):
                 params["isbn"] = isbn
             offset = config.get("offset")
             if offset is not None:
-                params["offset"] = offset
+                try:
+                    if  (offset % 20) != 0:
+                        raise OffsetException("offset must be a multiple of 20")
+                    else:
+                        params["offset"] = offset
+                except OffsetException as e:
+                    return False, e
+
             price = config.get("price")
             if price is not None:
                 params["price"] = price
